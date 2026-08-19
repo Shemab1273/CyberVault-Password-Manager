@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Secure Password Manager</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+
+        body {
+            background: linear-gradient(to right, #0f172a, #1e293b);
+            color: white;
+            font-family: Arial, sans-serif;
+	    min-height: 100vh;
+        }
+
+
+        .main-container {
+            margin-top: 80px;
+        }
+
+
+        .card {
+            background-color: #1e293b;
+	    border: none;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+        }
+
+	h1, h3, h4 {
+    	    color: white;
+	}
+
+	.form-label {
+    	    margin-bottom: 10px;
+    	    font-weight: bold;
+	}
+
+        .form-control {
+            background-color: #334155 !important;
+            border: 1px solid #475569;
+            color:  white !important;
+	    padding: 14px;
+	    border-radius: 10px;
+    	    margin-bottom: 20px;
+    	    width: 100%;
+        }
+
+        .form-control:focus {
+            background-color: #475569 !important;
+            color: white !important;	
+	    border-color: #60a5fa;
+            box-shadow: 0 0 10px rgba(96,165,250,0.4);
+        }
+
+        .btn-custom {
+
+            background-color: #2563eb;
+            border: none;
+	    padding: 12px;
+	    border-radius: 10px;
+    	    font-weight: bold;
+        }
+
+
+        .btn-custom:hover {
+            background-color: #1d4ed8;
+        }
+
+	.account-item {
+    	    background-color: #334155;
+    	    padding: 15px;
+    	    border-radius: 10px;
+    	    margin-bottom: 12px;
+	}
+
+	.alert {
+    	    border-radius: 10px;
+	}
+
+       
+        a {
+            color: #60a5fa;
+	    text-decoration: none;
+
+           }
+
+        a:hover {
+            color: #93c5fd;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div style="
+    max-width: 650px;
+    margin: 60px auto;
+    background-color: #1e293b;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 25px rgba(0,0,0,0.5);
+">
+
+    <div style="text-align:center; margin-bottom:40px;">
+
+    <img
+        src="{{ url_for('static', filename='logo.png') }}"
+        alt="Password Manager Logo"
+        width="150"
+        style="border-radius:10px; margin-bottom:15px;"
+    >
+
+    <h1 style="color:white;">
+        CyberVault Password Manager
+    </h1>
+
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+
+
+               <div style="
+                    padding:15px;
+                    margin-bottom:20px;
+                    border-radius:10px;
+                    background-color:
+                    {% if category == 'error' %}
+                        #7f1d1d
+                    {% else %}
+                        #14532d
+                    {% endif %};
+                    color:white;
+                ">
+
+                    {{ message }}
+                  </div>
+
+
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
+        <!-- LOGIN FORM -->
+
+        {% if show_login %}
+
+
+        <h2 style="margin-bottom:30px;">Login</h2>
+
+
+        <form method="POST">
+
+
+            {{ login_form.hidden_tag() }}
+
+
+            <div style="margin-bottom:25px;">
+
+
+                <label style="
+                    display:block;
+                    margin-bottom:10px;
+                    font-weight:bold;
+                ">
+
+                    Username
+                </label>
+
+                {{ login_form.username(style="
+                    width:100%;
+                    padding:14px;
+                    border-radius:10px;
+                    border:none;
+                    background-color:#334155;
+                    color:white;
+                    font-size:16px;
+                ") }}
+
+
+            </div>
+
+            <div style="margin-bottom:30px;">
+
+            <label style="
+                display:block;
+                margin-bottom:10px;
+                font-weight:bold;
+            ">
+                Password
+            </label>
+
+            {{ login_form.password(style="
+                width:100%;
+                padding:14px;
+                border-radius:10px;
+                border:none;
+                background-color:#334155;
+                color:white;
+                font-size:16px;
+             ") }}
+
+
+            </div>
+
+            <button type="submit" style="
+                width:100%;
+                padding:14px;
+                background-color:#2563eb;
+                color:white;
+                border:none;
+                border-radius:10px;
+                font-size:16px;
+                font-weight:bold;
+                cursor:pointer;
+            ">
+                Login
+            </button>
+
+
+        </form>
+
+
+        <div style="
+            text-align:center;
+            margin-top:25px;
+        ">
+
+
+            <a href="/create-user" style="
+                color:#60a5fa;
+                text-decoration:none;
+                font-size:16px;
+            ">
+
+		Create Account
+	    </a>
+
+
+         </div>
+
+
+         {% endif %}
+
+	<!-- CREATE ACCOUNT -->
+	{% if show_create %}
+
+	<h2 style="margin-bottom:30px;">Create Account</h2>
+
+	<form method="POST">
+
+    	    {{ create_user_form.hidden_tag() }}
+
+    	    <div style="margin-bottom:20px;">
+        	<label>Username</label>
+        	{{ create_user_form.username(style="
+            	    width:100%;
+            	    padding:14px;
+            	    border-radius:10px;
+            	    border:none;
+            	    background-color:#334155;
+            	    color:white;
+        	") }}
+    	    </div>
+
+    	    <div style="margin-bottom:20px;">
+        	<label>Password</label>
+        	{{ create_user_form.password(style="
+            	    width:100%;
+            	    padding:14px;
+            	    border-radius:10px;
+            	    border:none;
+            	    background-color:#334155;
+            	    color:white;
+      	  	") }}
+    	    </div>
+
+    	    <div style="margin-bottom:30px;">
+        	<label>Confirm Password</label>
+        	{{ create_user_form.confirm_password(style="
+            	    width:100%;
+            	    padding:14px;
+            	    border-radius:10px;
+            	    border:none;
+            	    background-color:#334155;
+            	    color:white;
+        	") }}
+    	    </div>
+
+    	    <button type="submit" style="
+        	width:100%;
+        	padding:14px;
+        	background-color:#2563eb;
+        	color:white;
+        	border:none;
+        	border-radius:10px;
+        	font-size:16px;
+        	font-weight:bold;
+    	    ">
+        	Create Account
+    	    </button>
+
+	</form>
+
+	<div style="text-align:center; margin-top:25px;">
+    	    <a href="/login">Back to Login</a>
+	</div>
+
+	{% endif %}
+
+	<!-- MANAGE ACCOUNTS -->
+	{% if show_manage %}
+
+	<h2 style="margin-bottom:30px;">Manage Accounts</h2>
+
+	<form method="POST">
+
+    	    {{ manage_accounts_form.hidden_tag() }}
+
+    	    <div style="margin-bottom:20px;">
+        	<label>Service Name</label>
+        	{{ manage_accounts_form.service_name(class="form-control") }}
+    	    </div>
+
+    	    <div style="margin-bottom:20px;">
+        	<label>Account Username</label>
+        	{{ manage_accounts_form.account_username(class="form-control") }}
+    	    </div>
+
+    	    <div style="margin-bottom:30px;">
+        	<label>Account Password</label>
+        	{{ manage_accounts_form.account_password(class="form-control") }}
+    	    </div>
+
+    	    <button type="submit" style="
+        	width:100%;
+        	padding:14px;
+        	background-color:#2563eb;
+        	color:white;
+        	border:none;
+        	border-radius:10px;
+        	font-size:16px;
+        	font-weight:bold;
+    	    ">
+        	Add or Update
+    	    </button>
+
+	</form>
+
+	<hr style="margin:40px 0;">
+
+	<h3>Stored Accounts</h3>
+
+	{% if stored_accounts %}
+
+    	    {% for account in stored_accounts %}
+
+	    <div class="account-item">
+
+    		<strong>{{ account[0] }}</strong>
+
+    		<br>
+
+    		{{ account[1] }}
+
+    		<br><br>
+
+    		<button
+        	    type="button"
+        	    onclick="viewPassword('{{ account[0] }}', '{{ account[1] }}')"
+        	    style="
+            		background-color:#2563eb;
+            		color:white;
+            		border:none;
+            		border-radius:8px;
+            		padding:8px 12px;
+            		cursor:pointer;
+        	    ">
+        	    View Password
+    		</button>
+
+    		<div
+        	    id="password-{{ loop.index }}"
+        	    style="margin-top:10px;color:#93c5fd;">
+    		</div>
+
+	    </div>
+
+	    {% endfor %}
+
+	{% else %}
+
+    	    <p>No stored accounts yet.</p>
+
+	{% endif %}
+
+	<div style="margin-top:30px;">
+
+    	    <a href="/logout">
+
+        	<button
+            	    type="button"
+            	    style="
+                	width:100%;
+                	padding:14px;
+                	background-color:#dc2626;
+                	color:white;
+                	border:none;
+                	border-radius:10px;
+                	font-size:16px;
+                	font-weight:bold;
+            	    ">
+            	    Logout
+        	</button>
+
+    	    </a>
+
+	</div>
+
+	{% endif %}
+
+</div>            
+    <script>
+
+    async function viewPassword(service, username) {
+
+    const masterPassword = prompt(
+        "Please re-enter your master password:"
+    );
+
+    if (!masterPassword) {
+        return;
+    }
+
+    try {
+
+        // Get the CSRF token generated by Flask-WTF
+        const csrfToken = document.querySelector(
+            'input[name="csrf_token"]'
+        ).value;
+
+        // Reauthenticate the user
+        const authResponse = await fetch(
+            "/reauthenticate",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken
+                },
+                body: JSON.stringify({
+                    password: masterPassword
+                })
+            }
+        );
+
+        const authData = await authResponse.json();
+
+        if (!authResponse.ok) {
+
+            alert(
+                authData.error ||
+                "Security verification failed."
+            );
+
+            return;
+        }
+
+        if (!authData.success) {
+
+            alert(
+                "Incorrect master password."
+            );
+
+            return;
+        }
+
+        // Retrieve the encrypted account and decrypt it
+        const response = await fetch(
+            `/api/accounts/${encodeURIComponent(service)}/${encodeURIComponent(username)}`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                data.error ||
+                "Unable to retrieve password."
+            );
+
+            return;
+        }
+
+        if (data.account_password) {
+
+            alert(
+                "Password: " +
+                data.account_password
+            );
+
+        } else {
+
+            alert(
+                "Unable to retrieve password."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error("Password retrieval error:", error);
+
+        alert(
+            "An error occurred while retrieving the password."
+        );
+
+    }
+}
+    </script>
+
+</body>
+</html>

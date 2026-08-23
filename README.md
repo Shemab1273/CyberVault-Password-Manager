@@ -203,65 +203,35 @@ The `.env` file is excluded from Git using `.gitignore`.
 **## Application Workflow**
 
 
-
-```
-
+```text
 User
-
-&#x20; |
-
-&#x20; v
-
+ |
+ v
 Login
-
-&#x20; |
-
-&#x20; v
-
+ |
+ v
 Master Password Verification
-
-&#x20; |
-
-&#x20; v
-
+ |
+ v
 Authenticated Session
-
-&#x20; |
-
-&#x20; v
-
+ |
+ v
 CyberVault Dashboard
-
-&#x20; |
-
-&#x20; +------> Add / Update Account
-
-&#x20; |
-
-&#x20; +------> View Stored Accounts
-
-&#x20; |
-
-&#x20; +------> Re-enter Master Password
-
-&#x20;                   |
-
-&#x20;                   v
-
-&#x20;            Retrieve Encrypted Credential
-
-&#x20;                   |
-
-&#x20;                   v
-
-&#x20;            Decrypt Credential
-
-&#x20;                   |
-
-&#x20;                   v
-
-&#x20;            Display Password
-
+ |
+ +-----> Add / Update Account
+ |
+ +-----> View Stored Accounts
+ |
+ +-----> Re-enter Master Password
+              |
+              v
+       Retrieve Encrypted Credential
+              |
+              v
+       Decrypt Credential
+              |
+              v
+         Display Password
 ```
 
 

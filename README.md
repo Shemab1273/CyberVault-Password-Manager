@@ -334,6 +334,19 @@ The final testing phase confirmed that the primary authentication, account manag
 
 
 
+## Security Verification
+
+The repository was reviewed using GitHub security features to verify the security of the project.
+
+- Secret scanning reported no unresolved secrets.
+- CodeQL code scanning reported 0 open alerts.
+- Dependabot alerts are enabled to monitor project dependencies.
+- The repository includes a `.gitignore` file that excludes sensitive local files such as `.env`, security logs, virtual environments, and Flask session data.
+- A `SECURITY.md` file provides guidance for reporting potential security vulnerabilities.
+
+These controls provide an additional layer of security monitoring for the project's source code and repository configuration.
+
+
 **## Project Structure**
 
 

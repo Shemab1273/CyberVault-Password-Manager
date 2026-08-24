@@ -1,8 +1,25 @@
 **# CyberVault Password Manager**
 
 
-
 A security-focused password management web application built with Python, Flask, and MySQL. CyberVault was developed as an academic cybersecurity project to demonstrate secure authentication, credential protection, session management, input validation, and defensive web application security practices.
+
+
+
+**## Project Highlights**
+
+\- Developed a Flask-based password management web application using Python and MySQL.
+
+\- Implemented bcrypt hashing for master passwords and Fernet encryption for stored account passwords.
+
+\- Added CSRF protection, session expiration, password complexity validation, rate limiting, and security headers.
+
+\- Implemented master password reauthentication before stored credentials can be retrieved.
+
+\- Used environment variables to separate sensitive configuration from application source code.
+
+\- Performed functional and security-focused testing of authentication, account management, password retrieval, and session security.
+
+\- Used GitHub security features including CodeQL, secret scanning, and Dependabot to review and monitor the repository.
 
 
 
@@ -334,15 +351,19 @@ The final testing phase confirmed that the primary authentication, account manag
 
 
 
-## Security Verification
+**## Security Verification**
 
 The repository was reviewed using GitHub security features to verify the security of the project.
 
-- Secret scanning reported no unresolved secrets.
-- CodeQL code scanning reported 0 open alerts.
-- Dependabot alerts are enabled to monitor project dependencies.
-- The repository includes a `.gitignore` file that excludes sensitive local files such as `.env`, security logs, virtual environments, and Flask session data.
-- A `SECURITY.md` file provides guidance for reporting potential security vulnerabilities.
+\- Secret scanning reported no unresolved secrets.
+
+\- CodeQL code scanning reported 0 open alerts.
+
+\- Dependabot alerts are enabled to monitor project dependencies.
+
+\- The repository includes a `.gitignore` file that excludes sensitive local files such as `.env`, security logs, virtual environments, and Flask session data.
+
+\- A `SECURITY.md` file provides guidance for reporting potential security vulnerabilities.
 
 These controls provide an additional layer of security monitoring for the project's source code and repository configuration.
 
